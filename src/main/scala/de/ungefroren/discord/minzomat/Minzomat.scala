@@ -2,14 +2,26 @@ package de.ungefroren.discord.minzomat
 
 import java.time.OffsetDateTime
 
+import de.ungefroren.discord.minzomat.StatusManager.{SpreadStatus, Status}
 import de.ungefroren.discord.minzomat.utils.{RestartScheduler, WithLogger}
 import javax.security.auth.login.LoginException
+import net.dv8tion.jda.core.entities.Game.GameType
 import net.dv8tion.jda.core.{JDA, JDABuilder}
+
+import scala.concurrent.duration._
 
 class Minzomat(private val apiToken: String, private val restartScheduler: Option[RestartScheduler] = None) extends WithLogger {
 
   private var jdaInstance: Option[JDA] = None
   private var eventHandler: Option[EventHandler] = None
+  private var statusManager: Option[StatusManager] = None
+
+  private val STATUS = Seq(
+    Status(GameType.DEFAULT, "Mention or PM for help!", 5 seconds),
+    new SpreadStatus(3 seconds),
+    Status(GameType.DEFAULT, "Mention or PM for help!", 5 seconds),
+    Status(GameType.WATCHING, "https://git.io/minzomat \uD83E\uDD16", 5 seconds)
+  )
 
   def init(): Boolean = {
     try {
@@ -36,6 +48,7 @@ class Minzomat(private val apiToken: String, private val restartScheduler: Optio
     //restartScheduler = Some(RestartScheduler(restartTime, 10 seconds, 6))
     restartScheduler.foreach(_.init())
     eventHandler = Some(new EventHandler(JDA))
+    statusManager = Some(new StatusManager(JDA, STATUS))
     JDA.addEventListener(eventHandler.get)
   }
 

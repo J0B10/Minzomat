@@ -45,8 +45,7 @@ class AminzingEmbed private (
 object AminzingEmbed {
 
   // language=RegExp
-  private val TITLE_REGEX = "\\s*(#+) +(.*)\\s*".r
-
+  private val TITLE_REGEX = "\\s*(#+)\\s*(.*)".r
   // language=RegExp
   private val COLOR_NAME_REGEX = "\\w+[ _]?\\w*".r
   // language=RegExp
@@ -140,8 +139,8 @@ object AminzingEmbed {
               field_inline = h.length > 1
             } else {
               fields += new Field(
-                field_title.getOrElse(ZERO_WIDTH_SPACE),
-                if (field_description.isEmpty || "\\s+".r.unapplySeq(field_description).isDefined) ZERO_WIDTH_SPACE else field_description.mkString,
+                field_title.get.fixEmpty,
+                field_description.mkString.fixEmpty,
                 field_inline
               )
               field_title = Some(s)
@@ -158,22 +157,22 @@ object AminzingEmbed {
       }
       if (field_title.isDefined) {
         fields += new Field(
-          field_title.getOrElse(ZERO_WIDTH_SPACE),
-          if (field_description.isEmpty || "\\s+".r.unapplySeq(field_description).isDefined) ZERO_WIDTH_SPACE else field_description.mkString,
+          field_title.get.fixEmpty,
+          field_description.mkString.fixEmpty,
           field_inline
         )
       }
       if (url.isEmpty && (_title.isDefined || _description.nonEmpty)) {
         fields.insert(0, new Field(
-          _title.getOrElse(ZERO_WIDTH_SPACE),
-          if (_description.isEmpty || "\\s+".r.unapplySeq(_description).isDefined) ZERO_WIDTH_SPACE else _description.mkString,
+          _title.get.fixEmpty,
+          _description.mkString.fixEmpty,
           false
         ))
         _title = None
         _description = new mutable.StringBuilder
       }
       val title = _title.orNull
-      val description = if (_description.isEmpty || "\\s+".r.unapplySeq(_description).isDefined) null else _description.mkString
+      val description = if (_description.isEmpty) null else _description.mkString.fixEmpty
       Some(new AminzingEmbed(
         instruction,
         url.orNull,
@@ -246,5 +245,15 @@ object AminzingEmbed {
         }
       }).filter(!_.isEmpty)
     }
+  }
+
+  private implicit class StringUtils(val string: String) {
+
+    /**
+      * If the string is empty (or only contains whitespace characters) use discords ZERO_WIDTH_SPACE character instead, so the emebed does still work
+      *
+      * @return character `\``u200E` if the string is empty, otherwise the original string
+      */
+    def fixEmpty: String = if (string.isEmpty || string.matches("\\s+")) ZERO_WIDTH_SPACE else string
   }
 }
