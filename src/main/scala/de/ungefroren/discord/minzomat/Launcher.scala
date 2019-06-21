@@ -1,12 +1,12 @@
 package de.ungefroren.discord.minzomat
 
 import java.time.format.{DateTimeFormatter, DateTimeParseException}
-import java.time.{LocalDate, LocalTime, OffsetDateTime}
+import java.time.{LocalDate, LocalTime, OffsetDateTime, ZoneOffset}
 
 import de.ungefroren.discord.minzomat.utils.RestartScheduler
 
-import scala.io.StdIn
 import scala.concurrent.duration._
+import scala.io.StdIn
 
 object Launcher {
 
@@ -25,7 +25,7 @@ object Launcher {
           sys.exit(-1)
           null
       }
-    }).map(time => RestartScheduler(time.atOffset(OffsetDateTime.now.getOffset), 10 seconds, 6))
+    }).map(t => RestartScheduler(t.atOffset(OffsetDateTime.now().getOffset), 10 seconds, 6))
     new Minzomat(token, restart).init()
   }
 

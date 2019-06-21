@@ -55,6 +55,7 @@ class Minzomat(private val apiToken: String, private val restartScheduler: Optio
   private def onShutdown(): Unit = {
     log info "Shutting down the bot..."
     restartScheduler.foreach(_.cancel())
+    statusManager.foreach(_.cancel())
   }
 
   def JDA: JDA = jdaInstance.getOrElse(throw new IllegalStateException("Jda is not initialized yet"))

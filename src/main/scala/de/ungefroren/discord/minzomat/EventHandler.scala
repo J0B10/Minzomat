@@ -22,6 +22,7 @@ class EventHandler(private val JDA: JDA) extends EventListener with WithLogger {
       case e: MessageReceivedEvent =>
         messageReceived(e)
         helpWanted(e)
+      case _ => //Do Nothing
     }
   }
 

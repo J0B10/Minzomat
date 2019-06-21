@@ -1,11 +1,11 @@
 package de.ungefroren.discord.minzomat.utils
 
 import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
+import java.util.concurrent.Executors
 
-import akka.actor.{Actor, ActorSystem, Cancellable, Props}
-import de.ungefroren.discord.minzomat.utils.RestartScheduler._
-
+import scala.concurrent.duration.FiniteDuration
 import scala.concurrent.duration._
 
 /**
@@ -15,7 +15,9 @@ import scala.concurrent.duration._
   * @param notifyInterval interval between the notifications before shutdown
   * @param notifyTimes how often should be notified before shutdown (0 to deactivate notifications)
   */
-class RestartScheduler(scheduleIn: FiniteDuration, val notifyInterval: FiniteDuration, val notifyTimes: Int) extends WithLogger {
+class RestartScheduler(scheduleIn: FiniteDuration, val notifyInterval: FiniteDuration, val notifyTimes: Int) extends WithLogger  {
+
+  private val executor = Executors.newSingleThreadScheduledExecutor()
 
   /**
     * Time when the restart scheduler was setup
@@ -29,48 +31,41 @@ class RestartScheduler(scheduleIn: FiniteDuration, val notifyInterval: FiniteDur
 
   private var i = 0
 
-  private var countdown: Option[Cancellable] = None
-  private var restart: Option[Cancellable] = None
-
   /**
     * Start this restart scheduler
     */
   def init(): Unit = {
-    val system = ActorSystem()
-    val actor = system actorOf Props(classOf[RestartActor])
-    import system.dispatcher
-    countdown = if (i > 0) Some(system.scheduler.schedule(
-      scheduleIn - notifyInterval * notifyTimes,
-      notifyInterval,
-      actor,
-      Countdown({
-        val left = (notifyTimes - i) * notifyInterval
-        i += 1
-        left
-      }))) else None
-    restart = Some(system.scheduler.scheduleOnce(scheduleIn, actor, Restart))
+    log info s"Restart scheduled at ${restart_time.format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)}"
+    executor.scheduleWithFixedDelay(countdown, (scheduleIn - notifyInterval * notifyTimes).toMillis, notifyInterval.toMillis, MILLISECONDS)
+    executor.schedule(shutdown, scheduleIn.toMillis, MILLISECONDS)
   }
 
   /**
     * Stops this scheduler and cancels all actions
-    *
-    * @return true if the actions were canceled, also returns false if they were previously (concurrently) canceled
     */
-  def cancel(): Boolean = {
-    val c = countdown.map(_.cancel)
-    val r = restart.map(_.cancel())
-    c.getOrElse(true) && r.getOrElse(true)
+  def cancel(): Unit = {
+    executor.shutdownNow()
+  }
+
+  private val shutdown: Runnable =() => {
+    log info "SHUTING DOWN NOW!"
+    sys exit 0
+  }
+
+  private val countdown: Runnable =() => {
+    val left = (notifyTimes - i) * notifyInterval
+    i += 1
+    log info s"Restart scheduled in $left"
   }
 }
-
 object RestartScheduler {
 
   /**
     * Schedules a shutdown of the bot after a given time interval
     *
-    * @param scheduleIn duration after which the bot should be shut down
+    * @param scheduleIn     duration after which the bot should be shut down
     * @param notifyInterval interval between the notifications before shutdown
-    * @param notifyTimes how often should be notified before shutdown (0 to deactivate notifications)
+    * @param notifyTimes    how often should be notified before shutdown (0 to deactivate notifications)
     */
   def apply(scheduleIn: FiniteDuration, notifyInterval: FiniteDuration, notifyTimes: Int): RestartScheduler =
     new RestartScheduler(scheduleIn, notifyInterval, notifyTimes)
@@ -78,6 +73,7 @@ object RestartScheduler {
   /**
     * Schedules a shutdown of the bot after a given time interval<br>
     * Won't display any notifications before shutdown
+    *
     * @param scheduleIn duration after which the bot should be shut down
     */
   def apply(scheduleIn: FiniteDuration): RestartScheduler =
@@ -86,31 +82,11 @@ object RestartScheduler {
   /**
     * Schedules a shutdown of the bot at a given time
     *
-    * @param scheduleAt time at which the bot should shut down
+    * @param scheduleAt     time at which the bot should shut down
     * @param notifyInterval interval between the notifications before shutdown
-    * @param notifyTimes how often should be notified before shutdown (0 to deactivate notifications)
+    * @param notifyTimes    how often should be notified before shutdown (0 to deactivate notifications)
     */
   def apply(scheduleAt: OffsetDateTime, notifyInterval: FiniteDuration, notifyTimes: Int) =
     new RestartScheduler(OffsetDateTime.now().until(scheduleAt, ChronoUnit.MILLIS) milliseconds, notifyInterval, notifyTimes)
 
-  /**
-    * Shut down the bot
-    */
-  case class Restart()
-
-  /**
-    * Log a info message that notifies about a upcoming restart
-    * @param i duration till restart
-    */
-  case class Countdown(i: FiniteDuration)
-
-  class RestartActor extends Actor with WithLogger {
-    override def receive: Receive = {
-      case Restart() =>
-        log info "SHUTING DOWN NOW!"
-        sys exit 0
-      case Countdown(i) =>
-        log info s"Restart scheduled in $i"
-    }
-  }
 }
