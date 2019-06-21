@@ -53,6 +53,7 @@ class Minzomat(private val apiToken: String, private val restartScheduler: Optio
   }
 
   private def onShutdown(): Unit = {
+    log info "Shutting down the bot..."
     restartScheduler.foreach(_.cancel())
   }
 
