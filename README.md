@@ -4,13 +4,13 @@
 Minzomat makes your server aminzing™ by adding the following stuff:
 
 1. **Write your own embeds** [🇬🇧](https://github.com/joblo2213/Minzomat/wiki/write_embeds_en) / [🇩🇪](https://github.com/joblo2213/Minzomat/wiki/write_embeds_de)  
-   _Allows you to send a embed just like a normal message_
+   _Allows you to send an embed just like a normal message_
 
 2. **Quote messages**  [🇬🇧](https://github.com/joblo2213/Minzomat/wiki/quote_messages_en) / [🇩🇪](https://github.com/joblo2213/Minzomat/wiki/quote_messages_de)   
    _Allows you to show what another user wrote some time ago inside an embed_  
 
 3. **Large reactions  _[WIP]_**  
-   _React on a message with the `:minzomat:` emoji adn the bot will display all reactions in one large image._  
+   _React on a message with the `:minzomat:` emoji and the bot will display all reactions in one large image._  
    _This Feature is not finished yet._  
 
 _Clicking on the small flags will bring you directly to the wiki pages for that language_
