@@ -21,6 +21,12 @@ _Clicking on the small flags will bring you directly to the wiki pages for that 
 
 If you rather want to host the bot yourself just download the latest version form the [releases](https://github.com/joblo2213/Minzomat/releases) and execute it.
 
+## Discord 
+Join the discord server for help, exchanging ideas or just chilling with the community:
+
+[![dc](https://discordapp.com/api/guilds/591513624535891978/widget.png?style=banner3)](https://discord.gg/fNSUn2e)  
+[_(discord.gg/fNSUn2e)_](https://discord.gg/fNSUn2e)  
+
 ## License
 The bot is licensed under [Eclipse Public License 2.0](https://github.com/joblo2213/Minzomat/blob/master/LICENSE).  
 
