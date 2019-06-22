@@ -22,7 +22,7 @@ object Help {
       |   _Allows you to show what another user wrote some time ago inside an embed_
       |
       |🔧  **Large reactions  _[WIP]_**
-      |   _React on a message with the `:minzomat:` emoji adn the bot will display all reactions in one large image._
+      |   _React on a message with the `:minzomat:` emoji and the bot will display all reactions in one large image._
       |   _This Feature is not finished yet._
       |$footer: git.io/minzomat
       |$footerImage: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png""".stripMargin).get
