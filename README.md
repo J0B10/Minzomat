@@ -17,7 +17,7 @@ _Clicking on the small flags will bring you directly to the wiki pages for that 
 
 ## Get the bot
 
-[Add the bot to your server!](https://discordapp.com/oauth2/authorize?client_id=589876943353151488&permissions=1073997824&scope=bot)
+[**Add the bot to your server!**](https://discordapp.com/oauth2/authorize?client_id=589876943353151488&permissions=1073997824&scope=bot)
 
 If you rather want to host the bot yourself just download the latest version form the [releases](https://github.com/joblo2213/Minzomat/releases) and execute it.
 
