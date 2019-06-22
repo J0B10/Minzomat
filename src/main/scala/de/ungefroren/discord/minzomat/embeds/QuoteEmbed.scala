@@ -57,7 +57,6 @@ object QuoteEmbed {
     val footer = new Footer(ZERO_WIDTH_SPACE, "https://raw.githubusercontent.com/joblo2213/Minzomat/master/images/quote_footer_icon.png", null)
     val embeded = ListBuffer[String]()
     val attachments = ListBuffer[String]()
-    var i: Option[ImageInfo] = None
     message.getEmbeds.forEach(e => {
       e.getType match {
         case EmbedType.VIDEO => embeded += e.getVideoInfo.getUrl
@@ -68,20 +67,12 @@ object QuoteEmbed {
       }
     })
     message.getAttachments.forEach(a => {
-      if (a.isImage) {
-        attachments += s"[${a.getFileName}](${a.getProxyUrl})"
-        i = Some(new ImageInfo(a.getUrl, a.getProxyUrl, a.getWidth, a.getHeight))
-      } else {
-        attachments += s"[${a.getFileName}](${a.getUrl})"
-      }
+      attachments += s"[${a.getFileName}](${if (a.isImage) a.getProxyUrl else a.getUrl})"
     })
     val fields = ListBuffer[Field]()
-    val image = if (i.isDefined && attachments.size == 1) {
-      i.get
-    } else if (attachments.nonEmpty) {
+    if (attachments.nonEmpty) {
       fields += new Field("\uD83D\uDCCE Attachments:", attachments.mkString("\n"), false)
-      null
-    } else null
+    }
     if (embeded.nonEmpty) {
       fields += new Field("\uD83C\uDF10 Embeded:", embeded.mkString("\n"), false)
     }
@@ -99,7 +90,7 @@ object QuoteEmbed {
       author,
       null,
       footer,
-      image,
+      null,
       fields.toList.asJava
     )
   }

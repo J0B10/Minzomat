@@ -2,7 +2,7 @@ import java.io.File
 
 name := "de.ungefroren.discord.Minzomat"
 
-version := "1.0"
+version := "0.1"
 
 scalaVersion := "2.12.8"
 
@@ -19,6 +19,7 @@ libraryDependencies += "net.dv8tion" % "JDA" % "3.8.3_463"
 
 //resource files
 lazy val ADDITIONAL_RESOURCES: Seq[File] = Seq(
+  new File("README.md"),
   new File("LICENSE"),
   new File("images/minzomat_emote.png"),
   new File("images/quote_emote.png")

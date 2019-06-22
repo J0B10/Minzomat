@@ -15,12 +15,11 @@ object Help {
       |
       |Minzomat makes your server aminzing™ by adding the following stuff:
       |
-      |1️⃣  **[Write your own embeds](https://github.com/joblo2213/Minzomat/wiki/write_embeds_en)** [🇬🇧](https://github.com/joblo2213/Minzomat/wiki/write_embeds_en) / [🇩🇪](https://github.com/joblo2213/Minzomat/wiki/write_embeds_de)
+      |1⃣  **[Write your own embeds](https://github.com/joblo2213/Minzomat/wiki/write_embeds_en)** [🇬🇧](https://github.com/joblo2213/Minzomat/wiki/write_embeds_en) / [🇩🇪](https://github.com/joblo2213/Minzomat/wiki/write_embeds_de)
       |   _Allows you to send a embed just like a normal message_
       |
-      |🔧  **Quote messages  _[WIP]_**
+      |2⃣   **[Quote messages](https://github.com/joblo2213/Minzomat/wiki/quote_messages_en)** [🇬🇧](https://github.com/joblo2213/Minzomat/wiki/quote_messages_en) / [🇩🇪](https://github.com/joblo2213/Minzomat/wiki/quote_messages_de)
       |   _Allows you to show what another user wrote some time ago inside an embed_
-      |   _This Feature is not finished yet._
       |
       |🔧  **Large reactions  _[WIP]_**
       |   _React on a message with the `:minzomat:` emoji adn the bot will display all reactions in one large image._

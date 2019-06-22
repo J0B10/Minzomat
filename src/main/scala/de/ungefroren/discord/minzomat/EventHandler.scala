@@ -20,6 +20,7 @@ class EventHandler(private val JDA: JDA) extends EventListener with WithLogger {
       case e: MessageReceivedEvent =>
         messageReceived(e)
         helpWanted(e)
+        log info e.getMessage.getContentRaw
       case e: GuildMemberRoleAddEvent => serverAdded(e)
       case e: GuildMessageReactionAddEvent => quoteMessage(e)
       case _ => //Do Nothing
