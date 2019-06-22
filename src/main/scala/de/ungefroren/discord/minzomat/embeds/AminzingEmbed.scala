@@ -132,7 +132,7 @@ object AminzingEmbed {
       for (line <- lines) {
         line match {
           case TITLE_REGEX(h, s) =>
-            if (_title.isEmpty) {
+            if (_title.isEmpty && _description.isEmpty) {
               _title = Some(s)
             } else if (field_title.isEmpty) {
               field_title = Some(s)
@@ -149,9 +149,9 @@ object AminzingEmbed {
             }
           case _ =>
             if (field_title.isEmpty) {
-              _description ++= line
+              _description ++= line + "\n"
             } else {
-              field_description ++= line
+              field_description ++= line + "\n"
             }
         }
       }
@@ -162,7 +162,7 @@ object AminzingEmbed {
           field_inline
         )
       }
-      if (url.isEmpty && (_title.isDefined || _description.nonEmpty)) {
+      if (url.isEmpty && _title.isDefined) {
         fields.insert(0, new Field(
           _title.get.fixEmpty,
           _description.mkString.fixEmpty,

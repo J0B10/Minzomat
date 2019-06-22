@@ -2,7 +2,7 @@ package de.ungefroren.discord.minzomat
 
 import java.util.concurrent.Executors
 
-import de.ungefroren.discord.minzomat.StatusManager.Status
+import de.ungefroren.discord.minzomat.StatusManager.{SpreadStatus, Status}
 import net.dv8tion.jda.core.JDA
 import net.dv8tion.jda.core.entities.Game
 import net.dv8tion.jda.core.entities.Game.GameType
@@ -44,7 +44,12 @@ class StatusManager(private val JDA: JDA, private val status: Seq[Status]) {
         statusIterator = status.iterator
       }
       _current = Some(statusIterator.next())
-      JDA.getPresence.setGame(Game.of(current.get.activity, current.get.title))
+      _current.get match {
+        case e: SpreadStatus =>
+          JDA.getPresence.setGame(Game.of(current.get.activity, current.get.title.replace("$serversAmount", serversAmount.toString)))
+        case e: Status =>
+          JDA.getPresence.setGame(Game.of(current.get.activity, current.get.title))
+      }
       executor.schedule(nextStatus, current.get.displayDuration.toMillis, MILLISECONDS)
     }
   }

@@ -6,11 +6,9 @@ version := "1.0"
 
 scalaVersion := "2.12.8"
 
-mainClass := Some("de.ungefroren.discord.Minzomat.Launcher")
+mainClass := Some("de.ungefroren.discord.minzomat.Launcher")
 
-artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
-  s"Minzomat-${module.revision}.${artifact.extension}"
-}
+assemblyJarName in assembly := s"Minzomat-${version.value}.jar"
 
 // log4j Logger
 libraryDependencies += "org.slf4j" % "slf4j-log4j12" % "1.7.22"
@@ -22,7 +20,8 @@ libraryDependencies += "net.dv8tion" % "JDA" % "3.8.3_463"
 //resource files
 lazy val ADDITIONAL_RESOURCES: Seq[File] = Seq(
   new File("LICENSE"),
-  new File("images/minzomat_emote.png")
+  new File("images/minzomat_emote.png"),
+  new File("images/quote_emote.png")
 )
 
 lazy val RESOURCES_DIR = new File("src/main/resources")

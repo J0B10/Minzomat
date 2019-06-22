@@ -1,11 +1,13 @@
 package de.ungefroren.discord.minzomat
 
+import java.io.BufferedInputStream
 import java.time.OffsetDateTime
 
 import de.ungefroren.discord.minzomat.StatusManager.{SpreadStatus, Status}
 import de.ungefroren.discord.minzomat.utils.{RestartScheduler, WithLogger}
 import javax.security.auth.login.LoginException
 import net.dv8tion.jda.core.entities.Game.GameType
+import net.dv8tion.jda.core.entities.Icon
 import net.dv8tion.jda.core.{JDA, JDABuilder}
 
 import scala.concurrent.duration._
@@ -20,7 +22,7 @@ class Minzomat(private val apiToken: String, private val restartScheduler: Optio
     Status(GameType.DEFAULT, "Mention or PM for help!", 5 seconds),
     new SpreadStatus(3 seconds),
     Status(GameType.DEFAULT, "Mention or PM for help!", 5 seconds),
-    Status(GameType.WATCHING, "https://git.io/minzomat \uD83E\uDD16", 5 seconds)
+    Status(GameType.WATCHING, "git.io/minzomat \uD83E\uDD16", 5 seconds)
   )
 
   def init(): Boolean = {
@@ -49,6 +51,7 @@ class Minzomat(private val apiToken: String, private val restartScheduler: Optio
     restartScheduler.foreach(_.init())
     eventHandler = Some(new EventHandler(JDA))
     statusManager = Some(new StatusManager(JDA, STATUS))
+    statusManager.get.init()
     JDA.addEventListener(eventHandler.get)
   }
 
@@ -59,4 +62,8 @@ class Minzomat(private val apiToken: String, private val restartScheduler: Optio
   }
 
   def JDA: JDA = jdaInstance.getOrElse(throw new IllegalStateException("Jda is not initialized yet"))
+}
+object Minzomat {
+  val BOT_EMOTE = Icon.from(getClass.getResourceAsStream("/minzomat_emote.png"))
+  val QUOTE_EMOTE = Icon.from(getClass.getResourceAsStream("/quote_emote.png"))
 }

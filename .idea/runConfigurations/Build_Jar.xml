@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Build Jar" type="SbtRunConfiguration" factoryName="sbt Task">
-    <setting name="tasks" value="include package" />
+    <setting name="tasks" value="include assembly" />
     <setting name="vmparams" value="-Xms512M -Xmx1024M -Xss1M -XX:+CMSClassUnloadingEnabled" />
     <setting name="workingDir" value="$PROJECT_DIR$" />
     <setting name="useSbtShell" value="false" />
