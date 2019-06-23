@@ -19,10 +19,10 @@ class Minzomat(private val apiToken: String, private val restartScheduler: Optio
   private var statusManager: Option[StatusManager] = None
 
   private val STATUS = Seq(
-    Status(GameType.DEFAULT, "Mention or PM for help!", 5 seconds),
-    new SpreadStatus(3 seconds),
-    Status(GameType.DEFAULT, "Mention or PM for help!", 5 seconds),
-    Status(GameType.WATCHING, "git.io/minzomat \uD83E\uDD16", 5 seconds)
+    Status(GameType.DEFAULT, "Mention or PM for help!", 7 seconds),
+    new SpreadStatus(7 seconds),
+    Status(GameType.DEFAULT, "Mention or PM for help!", 7 seconds),
+    Status(GameType.WATCHING, "git.io/minzomat \uD83E\uDD16", 7 seconds)
   )
 
   def init(): Boolean = {
