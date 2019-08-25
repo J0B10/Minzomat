@@ -54,7 +54,7 @@ object QuoteEmbed {
     val description = message.getContentRaw
     val color = message.getMember.getColorRaw
     val timestamp = message.getCreationTime
-    val footer = new Footer(ZERO_WIDTH_SPACE, "https://raw.githubusercontent.com/joblo2213/Minzomat/master/images/quote_footer_icon.png", null)
+    val footer = new Footer(ZERO_WIDTH_SPACE, "https://raw.githubusercontent.com/joblo2213/Minzomat/codeoverflow-discord/images/quote_footer_icon.png", null)
     val embeded = ListBuffer[String]()
     val attachments = ListBuffer[String]()
     message.getEmbeds.forEach(e => {
