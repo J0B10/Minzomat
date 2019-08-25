@@ -10,7 +10,7 @@ object CodeOverflowDiscord {
   val GUILD_ID = 577412066994946060L
   val `#rules_CHANNEL_ID` = 580789858537308160L
   val `has_read_the_#📜rules_ROLE_ID` = 615153102139686912L
-  val EMOTES = Seq(""""👌"""", """"👍"""")
+  val EMOTES = Seq("""👌""", """👍""")
 
   /**
     * If a user accepts the rules by reacting with 👌 or 👍 to a message in the roles channel
