@@ -1,8 +1,5 @@
 package de.ungefroren.discord.minzomat
 
-import java.io.BufferedInputStream
-import java.time.OffsetDateTime
-
 import de.ungefroren.discord.minzomat.StatusManager.{SpreadStatus, Status}
 import de.ungefroren.discord.minzomat.utils.{RestartScheduler, WithLogger}
 import javax.security.auth.login.LoginException
@@ -11,6 +8,7 @@ import net.dv8tion.jda.core.entities.Icon
 import net.dv8tion.jda.core.{JDA, JDABuilder}
 
 import scala.concurrent.duration._
+import scala.language.postfixOps
 
 class Minzomat(private val apiToken: String, private val restartScheduler: Option[RestartScheduler] = None) extends WithLogger {
 
@@ -44,10 +42,6 @@ class Minzomat(private val apiToken: String, private val restartScheduler: Optio
   }
 
   private def onStart(): Unit = {
-    val now = OffsetDateTime.now()
-    var restartTime = now.withHour(4).withMinute(20).withSecond(0)
-    if (now.compareTo(restartTime) > 0) restartTime = restartTime.plusDays(1)
-    //restartScheduler = Some(RestartScheduler(restartTime, 10 seconds, 6))
     restartScheduler.foreach(_.init())
     eventHandler = Some(new EventHandler(JDA))
     statusManager = Some(new StatusManager(JDA, STATUS))

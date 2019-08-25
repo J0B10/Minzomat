@@ -15,17 +15,9 @@ Minzomat makes your server aminzing™ by adding the following stuff:
 
 _Clicking on the small flags will bring you directly to the wiki pages for that language_
 
-## Get the bot
-
-[**Add the bot to your server!**](https://discordapp.com/oauth2/authorize?client_id=589876943353151488&permissions=1073997824&scope=bot)
-
-If you rather want to host the bot yourself just download the latest version form the [releases](https://github.com/joblo2213/Minzomat/releases) and execute it.
-
-## Discord 
-Join the discord server for help, exchanging ideas or just chilling with the community:
-
-[![dc](https://discordapp.com/api/guilds/591513624535891978/widget.png?style=banner3)](https://discord.gg/fNSUn2e)  
-[_(discord.gg/fNSUn2e)_](https://discord.gg/fNSUn2e)  
+## codeoverflow-discord branch
+This branch contains an edited version of the bot created for the codeoverflow discord server.
+It was faster to just edit this bot than creating a new one.
 
 ## License
 The bot is licensed under [Eclipse Public License 2.0](https://github.com/joblo2213/Minzomat/blob/master/LICENSE).  

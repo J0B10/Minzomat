@@ -22,7 +22,9 @@ class EventHandler(private val JDA: JDA) extends EventListener with WithLogger {
         helpWanted(e)
         log info e.getMessage.getContentRaw
       case e: GuildMemberRoleAddEvent => serverAdded(e)
-      case e: GuildMessageReactionAddEvent => quoteMessage(e)
+      case e: GuildMessageReactionAddEvent =>
+        quoteMessage(e)
+        CodeOverflowDiscord.acceptRules(e)
       case _ => //Do Nothing
     }
   }
