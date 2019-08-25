@@ -43,6 +43,7 @@ class Minzomat(private val apiToken: String, private val restartScheduler: Optio
     eventHandler = Some(new EventHandler(JDA))
     statusManager = Some(new StatusManager(JDA, STATUS))
     statusManager.get.init()
+    CodeOverflowDiscord.manageOldReactions(JDA)
     JDA.addEventListener(eventHandler.get)
   }
 
