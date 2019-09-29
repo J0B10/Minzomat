@@ -42,7 +42,7 @@ object CodeOverflowDiscord {
       } else {
         i += 1
         message.getReactions.asScala.filter(r => EMOTES.contains(r.getReactionEmote.getName)).foreach(reaction => {
-          reaction.getUsers().asScala.map(u => guild.getMember(u)).foreach(member => {
+          reaction.getUsers().asScala.map(u => guild.getMember(u)).filter(Option(_).isDefined).foreach(member => {
             if (!member.getRoles.asScala.exists(_.getIdLong == `has_read_the_#📜rules_ROLE_ID`)) {
               val controller = new GuildController(guild)
               controller.addRolesToMember(member, guild.getRoleById(`has_read_the_#📜rules_ROLE_ID`)).queue()
