@@ -15,6 +15,8 @@ Minzomat makes your server aminzing™ by adding the following stuff:
 
 _Clicking on the small flags will bring you directly to the wiki pages for that language_
 
+### ⚠️ This bot has reached EOL and was affected by [`CVE-2021-44228`](https://github.com/advisories/GHSA-jfh8-c2jp-5v3q). Do not run it!
+
 ## Get the bot
 
 [**Add the bot to your server!**](https://discordapp.com/oauth2/authorize?client_id=589876943353151488&permissions=1073997824&scope=bot)
